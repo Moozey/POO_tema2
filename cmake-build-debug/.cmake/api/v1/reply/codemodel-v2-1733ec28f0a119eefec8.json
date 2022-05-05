@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Facultate/po/cmake-build-debug",
-		"source" : "D:/Facultate/po"
+		"build" : "C:/Users/Ana/Desktop/Github/POO_tema2/cmake-build-debug",
+		"source" : "C:/Users/Ana/Desktop/Github/POO_tema2"
 	},
 	"version" : 
 	{

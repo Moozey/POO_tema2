@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "d:/Facultate/po/cmake-build-debug"
+			"value" : "c:/Users/Ana/Desktop/Github/POO_tema2/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -623,7 +623,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Facultate/po"
+			"value" : "C:/Users/Ana/Desktop/Github/POO_tema2"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1239,7 +1239,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/Facultate/po/cmake-build-debug"
+			"value" : "C:/Users/Ana/Desktop/Github/POO_tema2/cmake-build-debug"
 		},
 		{
 			"name" : "po_IS_TOP_LEVEL",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/Facultate/po"
+			"value" : "C:/Users/Ana/Desktop/Github/POO_tema2"
 		}
 	],
 	"kind" : "cache",
