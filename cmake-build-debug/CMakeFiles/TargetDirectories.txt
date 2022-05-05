@@ -1,0 +1,3 @@
+D:/Facultate/po/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Facultate/po/cmake-build-debug/CMakeFiles/po.dir
+D:/Facultate/po/cmake-build-debug/CMakeFiles/rebuild_cache.dir
