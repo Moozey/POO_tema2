@@ -71,7 +71,7 @@ class Pantaloni:public Clothes {
     std:: string tip;
 public:
     Pantaloni(int marime1, std::string gen1, int nrBuzunare1, std:: string tip1) : Clothes(marime1, std::move(gen1)), nrBuzunare(nrBuzunare1), tip (std:: move(tip1)){}
-    Pantaloni() {}
+    Pantaloni() : Clothes(){}
 
     //supraincarcare metode virtuale pure
     Haine getTip() const override{
@@ -102,6 +102,29 @@ public:
         print(fout);
         std::cout << "\n" << "Acest pantalon are " << nrBuz() <<" buzunare";
         std::cout << "\n" << "Acest pantalon este " << tipul();
+    }
+
+    friend std::ostream &operator<<(std::ostream &fout, const Pantaloni &pa){
+        pa.print(fout);
+        return fout;
+    }
+    friend std::istream &operator>>(std::istream &sin, Pantaloni &pa){
+        std::string tipul, gen;
+        int marime, nrBuzunare;
+
+        std::cout<<"Introdu tipul, genul, marimea si nr de buzunare:"<<"\n";
+
+        std::getline(sin, tipul);
+        std::getline(sin, gen);
+        sin>> marime;
+        sin.get();
+        sin>> nrBuzunare;
+        sin.get();
+
+        pa.set_tip(tipul);
+        pa.setGen(gen);
+        pa.setMarime(marime);
+        return sin;
     }
 
     //cc
@@ -148,6 +171,27 @@ public:
     void print(std:: ostream &fout) const override{
         print(fout);
         std::cout << "\n" << "Acest Tricou este pentru " << tipul();
+    }
+
+    friend std::ostream &operator<<(std::ostream &fout, const Tricouri &tri){
+        tri.print(fout);
+        return fout;
+    }
+    friend std::istream &operator>>(std::istream &sin, Tricouri &tri){
+        std::string tipul, gen;
+        int marime;
+
+        std::cout<<"Introdu tipul, genul, marimea:"<<"\n";
+
+        std::getline(sin, tipul);
+        std::getline(sin, gen);
+        sin>> marime;
+        sin.get();
+
+        tri.set_tip(tipul);
+        tri.setGen(gen);
+        tri.setMarime(marime);
+        return sin;
     }
 
     //cc
@@ -202,6 +246,28 @@ public:
         std::cout << "\n" << "Acest adidas este " << tipul();
     }
 
+    friend std::ostream &operator<<(std::ostream &fout, const Adidasi &ad){
+        ad.print(fout);
+        return fout;
+    }
+    friend std::istream &operator>>(std::istream &sin, Adidasi &ad){
+        std::string talpa, tipul, gen;
+        int marime;
+
+        std::cout<<"Introdu talpa, tipul, genul, marimea:"<<"\n";
+
+        std::getline(sin, talpa);
+        std::getline(sin, tipul);
+        std::getline(sin, gen);
+        sin>> marime;
+        sin.get();
+
+        ad.set_talpa(talpa);
+        ad.set_tip(tipul);
+        ad.setGen(gen);
+        ad.setMarime(marime);
+        return sin;
+    }
     //cc
     Adidasi(const Adidasi &adi) : Clothes(adi.getMarime(), adi.getGen()), tip(adi.tipul()), talpa(adi.talpaa()){}
 
@@ -218,30 +284,30 @@ public:
 
 
 class FashionStore{
-  std::vector<std::shared_ptr<Clothes>> haine;
+  static std::vector<std::shared_ptr<Clothes>> haine;
   FashionStore() = delete;
 public:
-    void addHaina( const std::shared_ptr<Clothes> &haina){
+    static void addHaina( const std::shared_ptr<Clothes> &haina){
         haine.push_back(haina);
     }
-    void printAllHaine (){
+    static void printAllHaine (){
         for (auto it: haine){
             std::cout<<it<<"\n";
         }
     }
-    void printAllTricouri() {
+    static void printAllTricouri() {
         for (auto it: haine){
             if (it->getTip() != Haine::Tricouri) continue;
             std::cout<<it<<"\n";
         }
     };
-    void printAllAdidasi() {
+    static void printAllAdidasi() {
         for (auto it: haine){
             if (it->getTip() != Haine::Adidasi) continue;
             std::cout<<it<<"\n";
         }
     }
-    void printAllPants() {
+    static void printAllPants() {
         for (auto it: haine){
             if (it->getTip() != Haine::Pantaloni) continue;
             std::cout<<it<<"\n";
@@ -249,11 +315,80 @@ public:
     };
 };
 
-
-
-
+std::vector<std::shared_ptr<Clothes>> FashionStore::haine;
 
 int main() {
+    std::string cerere;
+    std::cout <<"Ce doriti sa faceti?"<<std::endl;
+    std::cout << "Ce optiuni aveti: adauga haina, afiseaza haina.\n";
+    std::getline(std::cin, cerere);
 
+    while(cerere != "Gata"){
+        if(cerere == "adauga haina")
+        {
+            std::cout<<"Ce articol vestimentar doriti sa adaugati:Pantaloni, Adidasi sau Tricouri?\n";
+            std::string articol;
+            std::getline(std::cin, articol);
+            if(articol == "Pantaloni")
+            {
+                try {
+                    Pantaloni pants;
+                    std::cin>>pants;
+                    auto pantss = std::make_shared<Pantaloni>(pants);
+                    FashionStore::addHaina(pantss);
+                }
+                catch (const InvalidGender &e){
+                    std::cout<<e.what();
+                }
+                catch (const InvalidSize &e){
+                    std::cout<<e.what();
+                }
+            }
+            else if(articol == "Adidasi")
+            {
+                try {
+                    Adidasi adidas;
+                    std::cin>>adidas;
+                    auto adidass = std::make_shared<Adidasi>(adidas);
+                    FashionStore::addHaina(adidass);
+                }
+                catch (const InvalidGender &e){
+                    std::cout<<e.what();
+                }
+                catch (const InvalidSize &e){
+                    std::cout<<e.what();
+                }
+            }
+            else if(articol == "Tricouri")
+            {
+                try {
+                    Tricouri tricou;
+                    std::cin>>tricou;
+                    auto tricouu = std::make_shared<Tricouri>(tricou);
+                    FashionStore::addHaina(tricouu);
+                }
+                catch (const InvalidGender &e){
+                    std::cout<<e.what();
+                }
+                catch (const InvalidSize &e){
+                    std::cout<<e.what();
+                }
+            }
+        }
+        else {
+            std::cout<<"Ce doriti sa afisati: toate hainele, doar pantalonii, doar adidasii, doar tricourile\n";
+            std::string tip_articol;
+
+            std::getline(std::cin, tip_articol);
+            if (tip_articol == "toate țoalele") FashionStore::printAllHaine();
+            else if (tip_articol == "doar pantalonii") FashionStore::printAllPants();
+            else if (tip_articol == "doar adidasii") FashionStore::printAllAdidasi();
+            else FashionStore::printAllTricouri();
+        }
+
+        std::cout <<"Ce doriti sa faceti?"<<std::endl;
+        std::cout << "Ce optiuni aveti: adauga haina, afiseaza haina, gata.\n";
+        std::getline(std::cin, cerere);
+    }
 }
 
